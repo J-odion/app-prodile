@@ -37,7 +37,7 @@ const defaultValues: Partial<AppearanceFormValues> = {
   theme: "light",
 };
 
-const appearance = () => {
+const Appearance = () => {
 
     const { setTheme } = useTheme()
 
@@ -48,7 +48,7 @@ const appearance = () => {
 
   function onSubmit(data: AppearanceFormValues) {
     console.log(data);
-    setTheme(data.theme); // Update the theme
+    setTheme(data.theme);
     toast({
       title: "Preferences updated",
       description: "Your theme preference has been updated.",
@@ -192,4 +192,4 @@ const appearance = () => {
   );
 };
 
-export default appearance;
+export default Appearance;
