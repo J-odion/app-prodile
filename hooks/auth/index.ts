@@ -18,8 +18,22 @@ export const AuthSignUp = async (payload: SignUpProps) => {
   };
 
   console.log("Payload:", payload);
-  return await axios(config);
-
+  // return await axios(config);
+  try {
+    const response = await axios(config);
+    console.log('Backend response:', response.data);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      console.log('Error response from backend:', error.response.data);
+      toast({
+        title: `Something went wrong!`,
+        description: error.response.data.msg || "Unable to signup",
+        className: "toast-error",
+      })
+    }
+    throw error;
+  }
 };
 
 export const AuthLogin = async ({ ...rest }: LoginProps) => {
@@ -38,7 +52,7 @@ export const AuthLogin = async ({ ...rest }: LoginProps) => {
       console.log('Error response from backend:', error.response.data);
       toast({
         title: `Something went wrong!`,
-        description: error.response.data.message || "Unable to login",
+        description: error.response.data.msg || "Unable to login",
         className: "toast-error",
       })
     }

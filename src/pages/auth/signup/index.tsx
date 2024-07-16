@@ -43,24 +43,46 @@ const Signup = () => {
     },
   });
 
-  const mutation = useMutation({
-    mutationFn: AuthSignUp,
-    onSuccess: () => {
-      toast({
-        title: "Signup successful",
-        description: "Please confirm your email to continue",
-        variant: "default",
-      });
-      router.push("/auth/verifyOtp");
-    },
-    onError: (error: any) => {
-      setIsLoading(false);
-      console.log(error);
-      toast({
-        title: "Signup failed",
-        description: "An error occurred while signing up",
-        variant: "destructive",
-      });
+  // const mutation = useMutation({
+  //   mutationFn: AuthSignUp,
+  //   onSuccess: () => {
+  //     toast({
+  //       title: "Signup successful",
+  //       description: "Please confirm your email to continue",
+  //       variant: "default",
+  //     });
+  //     router.push("/auth/verifyOtp");
+  //   },
+  //   onError: (error: any) => {
+  //     setIsLoading(false);
+  //     console.log(error);
+  //     toast({
+  //       title: "Signup failed",
+  //       description: "An error occurred while signing up",
+  //       variant: "destructive",
+  //     });
+  //   },
+  // });
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: [QUERY_KEYS.signUp],
+    mutationFn: (data: SignUpProps) => AuthSignUp(data),
+    onSuccess(res) {
+      if (res.status === 200) {
+        console.log("Signup response:", res.data);
+        toast({
+          title: `Signup successful`,
+          description: "Please confirm your email to continue",
+          className: "toast-success",
+        });
+        router.push("/auth/verifyOtp");
+      } else {
+        toast({
+          title: "Signup failed",
+          description: "An error occurred while signing up",
+          className: "toast-error",
+        });
+      }
     },
   });
 
@@ -71,8 +93,7 @@ const Signup = () => {
       password: data.password,
     };
     useStorage.setItem('userEmail', payload.email);
-    setIsLoading(true);
-    mutation.mutate(payload);
+    mutate(payload);
   };
 
   const containerVariants = {
@@ -231,8 +252,8 @@ const Signup = () => {
                 <CustomButton
                   type="submit"
                   className="w-full bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
-                  isLoading={isLoading}
-                  disabled={isLoading}
+                  isLoading={isPending}
+                  disabled={isPending}
                 >
                   Signup
                 </CustomButton>

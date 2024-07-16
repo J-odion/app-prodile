@@ -198,8 +198,8 @@ const Login = () => {
                   <CustomButton
                     type="submit"
                     className="w-full bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
-                    isLoading={isLoading}
-                    disabled={isLoading}
+                    isLoading={isPending}
+                    disabled={isPending}
                   >
                     Login
                   </CustomButton>
