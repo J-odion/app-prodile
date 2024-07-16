@@ -32,6 +32,10 @@ const sidebarNavItems = [
     title: "Notes",
     href: "/dashboard/settings/notes",
   },
+  {
+    title: "Appearance",
+    href: "/dashboard/settings/appearance"
+  },
 ]
 
 interface SettingsLayoutProps {

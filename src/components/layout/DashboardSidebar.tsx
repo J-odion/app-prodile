@@ -57,7 +57,7 @@ const DashboardSidebar = ({ children }: DashboardSidebarProps) => {
   return (
     <>
       <nav className=" fixed w-full z-50">
-        <div className="hidden h-30 w-full bg-white lg:flex border-b items-center px-14 justify-between">
+        <div className="hidden h-30 w-full bg-white dark:bg-black dark:shadow-md lg:flex border-b items-center px-14 justify-between">
           <div className="flex items-center">
             <Image src="/images/prodile-logo-yellow.svg" width={150} height={50} alt="prodile logo" />
             <div>
