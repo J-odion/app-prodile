@@ -20,6 +20,7 @@ import { toast } from "@/components/ui/use-toast";
 import SettingsLayout from "./layout";
 import DashboardSidebar from "@/components/layout/DashboardSidebar";
 import { useTheme } from "next-themes"
+import { NextPageWithLayout } from "@/pages/_app";
 
 const appearanceFormSchema = z.object({
   theme: z.enum(["light", "dark"], {
@@ -37,7 +38,7 @@ const defaultValues: Partial<AppearanceFormValues> = {
   theme: "light",
 };
 
-const Appearance = () => {
+const Appearance: NextPageWithLayout = () =>{
 
     const { setTheme } = useTheme()
 
