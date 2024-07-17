@@ -142,31 +142,14 @@ const Signup = () => {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-      {/* <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-        className="absolute md:block hidden md:w-1/2 top-0 left-8 h-full lg:w-1/2"
-      >
-        <Image
-          src="/images/agricFarm.svg"
-          alt="Agricultural Illustration Left"
-          layout="fill"
-          objectFit="contain"
+      <div className="md:flex flex-[0.5] h-screen hidden">
+        <img
+          src="/images/bg001.jpg"
+          alt="background"
+          className="h-full w-full"
         />
-      </motion.div>
-      <motion.div
-        variants={rotatingVariants}
-        animate="rotate"
-        className="absolute hidden lg:block top-0 right-8 h-full w-1/4"
-      >
-        <Image
-          src="/images/globe.svg"
-          alt="Agricultural Illustration Right"
-          layout="fill"
-          objectFit="contain"
-        />
-      </motion.div> */}
+      </div>
+      <div className="flex flex-1 items-center justify-center">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -199,6 +182,7 @@ const Signup = () => {
                       placeholder="name"
                       field={field}
                       label="Name"
+                      classNameLabel="dark:text-[#646464]"
                     />
                   )}
                 />
@@ -213,6 +197,7 @@ const Signup = () => {
                       placeholder="example@domain.com"
                       field={field}
                       label="Email Address"
+                      classNameLabel="dark:text-[#646464]"
                     />
                   )}
                 />
@@ -228,6 +213,7 @@ const Signup = () => {
                       field={field}
                       label="Password"
                       type="password"
+                      classNameLabel="dark:text-[#646464]"
                     />
                   )}
                 />
@@ -244,6 +230,7 @@ const Signup = () => {
                       label="Confirm Password"
                       type="password"
                       className="w-full"
+                      classNameLabel="dark:text-[#646464]"
                     />
                   )}
                 />
@@ -276,6 +263,7 @@ const Signup = () => {
           </CardContent>
         </Card>
       </motion.div>
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
