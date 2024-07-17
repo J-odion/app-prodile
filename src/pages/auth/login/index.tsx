@@ -145,7 +145,7 @@ const Login = () => {
       >
         <Card className="mx-auto max-w-sm bg-white shadow-lg rounded-lg p-6">
             <CardHeader>
-              <CardTitle className="text-2xl">Login</CardTitle>
+              <CardTitle className="text-2xl dark:text-black">Login</CardTitle>
               <CardDescription>
                 Enter your email below to login to your account
               </CardDescription>
@@ -197,7 +197,7 @@ const Login = () => {
                   </div>
                   <CustomButton
                     type="submit"
-                    className="w-full bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
+                    className="w-full dark:bg-[--prodile-yellow] bg-[--prodile-yellow]  h-10 rounded-xl text-lg font-normal text-white py-4"
                     isLoading={isPending}
                     disabled={isPending}
                   >
