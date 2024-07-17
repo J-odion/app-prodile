@@ -111,32 +111,18 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-        className="absolute md:block hidden md:w-1/2 top-0 left-8 h-full lg:w-1/2"
+    <div className=" flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
+      {/* <div
+        className=" md:block hidden md:w-1/2 h-full lg:w-1/2"
       >
         <Image
-          src="/images/agricFarm.svg"
+          src="/images/bg001.jpg"
           alt="Agricultural Illustration Left"
-          layout="fill"
-          objectFit="contain"
+          width={200}
+          height={200}
         />
-      </motion.div>
-      <motion.div
-        variants={rotatingVariants}
-        animate="rotate"
-        className="absolute hidden lg:block top-0 right-8 h-full w-1/4"
-      >
-        <Image
-          src="/images/globe.svg"
-          alt="Agricultural Illustration Right"
-          layout="fill"
-          objectFit="contain"
-        />
-      </motion.div>
+      </div> */}
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
