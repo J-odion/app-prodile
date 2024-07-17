@@ -192,7 +192,7 @@ const Login = () => {
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <div className="mt-4 text-center">
-                    <p className="text-base font-normal">
+                    <p className="text-base font-normal dark:text-black">
                       Don&apos;t have an account?{" "}
                       <Link
                         href="/auth/signup"

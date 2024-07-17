@@ -142,7 +142,7 @@ const Signup = () => {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
@@ -166,7 +166,7 @@ const Signup = () => {
           layout="fill"
           objectFit="contain"
         />
-      </motion.div>
+      </motion.div> */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -175,12 +175,12 @@ const Signup = () => {
       >
         <Card className="mx-auto max-w-sm bg-white shadow-lg rounded-lg p-6 w-full">
           <CardHeader>
-            <CardTitle className="text-2xl">Signup</CardTitle>
+            <CardTitle className="text-2xl dark:text-black">Signup</CardTitle>
             <CardDescription>
               Enter your information to create an account
             </CardDescription>
           </CardHeader>
-          <CardContent className="my-2">
+          <CardContent className="">
             <Form {...form}>
             <motion.form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -251,7 +251,7 @@ const Signup = () => {
               <motion.div variants={itemVariants}>
                 <CustomButton
                   type="submit"
-                  className="w-full bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
+                  className="w-full dark:bg-[--prodile-yellow] bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
                   isLoading={isPending}
                   disabled={isPending}
                 >
@@ -260,11 +260,11 @@ const Signup = () => {
               </motion.div>
               <motion.div variants={itemVariants}>
                 <div className="mt-4 text-center">
-                  <p className="text-base font-normal">
+                  <p className="text-base font-normal dark:text-black">
                     Already have an account?{" "}
                     <Link
                       href="/auth/login"
-                      className="text-[--profile-yellow] underline hover:opacity-40"
+                      className="text-[--prodile-yellow] dark:text-[--prodile-yellow] underline hover:opacity-40"
                     >
                       Log in
                     </Link>

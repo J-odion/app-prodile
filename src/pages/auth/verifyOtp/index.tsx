@@ -133,7 +133,7 @@ const ConfirmEmail = () => {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-      <div
+      {/* <div
         className="absolute md:block hidden md:w-1/2 top-0 left-8 h-full lg:w-1/2"
       >
         <Image
@@ -154,7 +154,7 @@ const ConfirmEmail = () => {
           layout="fill"
           objectFit="contain"
         />
-      </motion.div>
+      </motion.div> */}
 
       <motion.div
         variants={containerVariants}
@@ -164,7 +164,7 @@ const ConfirmEmail = () => {
       >
       <Card className="mx-auto max-w-sm z-10 bg-transparent lg:bg-white py-6 w-full">
       <CardHeader>
-          <CardTitle className="text-2xl">OTP Verification</CardTitle>
+          <CardTitle className="text-2xl dark:text-black">OTP Verification</CardTitle>
           <CardDescription className="text-[--prodile-text-darkBlue]">
           A code has been sent to{" "}
           <span className="text-[--prodile-yellow]">********@mail.com</span>
@@ -233,14 +233,14 @@ const ConfirmEmail = () => {
             <div className="flex flex-col gap-4">
               <CustomButton
                 type="submit"
-                className="w-full bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
+                className="w-full dark:bg-[--prodile-yellow] bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
                 isLoading={isPending}
                 disabled={isPending}
               >
                 Continue
               </CustomButton>
               <Button
-                className="w-full bg-[--prodile-blue] font-normal text-lg py-4 h-10"
+                className="w-full dark:text-white dark:hover:bg-blue-950 dark:hover:transition-all bg-[--prodile-blue] font-normal text-lg py-4 h-10"
                 onClick={handleBacktoLogin}
               >
                 Back to login
