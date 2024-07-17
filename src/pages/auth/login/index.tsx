@@ -10,7 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import FormRender from "@/components/FormRender";
 import CustomButton from "@/components/CustomButton";
 import Link from "next/link";
-import { useMutation } from "@tanstack/react-query";
+import { Query, useMutation } from "@tanstack/react-query";
 import { AuthLogin } from "../../../../hooks/auth";
 import {
   Card,
@@ -54,17 +54,17 @@ const Login = () => {
         queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.login] });
         setAuthTokens(res.data.token);
         console.log(res.data.token);
-        useStorage.setItem("token", res.data.token);
+        useStorage.setItem("token", res.data.token)
         router.push("/dashboard");
-      } else {
-        toast({
-          title: "Login failed",
-          description: "Invalid email or password",
-          className: "toast-error",
-        });
-      }
-    },
-  });
+    } else {
+      toast({
+        title: "Login failed",
+        description: "Invalid email or password",
+        className: "toast-error",
+      });
+    }
+  }
+});
 
   const onSubmit = (values: z.infer<typeof signInFormSchema>) => {
     mutate(values);
@@ -88,102 +88,151 @@ const Login = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
+  const floatingVariants = {
+    float: {
+      y: [0, 10, 0],
+      transition: {
+        duration: 3,
+        ease: "easeInOut",
+        repeat: Infinity,
+      },
+    },
+  };
+
+  const rotatingVariants = {
+    rotate: {
+      rotate: [0, 360],
+      transition: {
+        duration: 20,
+        ease: "linear",
+        repeat: Infinity,
+      },
+    },
+  };
+
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-      <div className="md:flex flex-[0.5] h-screen hidden">
-        <img
-          src="/images/bg001.jpg"
-          alt="background"
-          className="h-full w-full"
-        />
-      </div>
-      <div className="flex flex-1 items-center justify-center">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="z-10 flex items-center justify-center"
-        >
-          <Card className="mx-auto max-w-sm bg-white shadow-lg rounded-lg p-6">
+    <div className=" flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
+
+    {/* <div>
+    <Image
+        src="/images/bg001.jpg"
+        alt="background"
+        width={400}
+        height={400}
+        quality={100}
+        className="h-full"
+      />
+    </div> */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10"
+      >
+        <Card className="mx-auto max-w-sm bg-white shadow-lg rounded-lg p-6">
             <CardHeader>
               <CardTitle className="text-2xl dark:text-black">Login</CardTitle>
               <CardDescription>
                 Enter your email below to login to your account
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <motion.form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="grid gap-4"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <motion.div variants={itemVariants}>
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormRender
-                          placeholder="example@gmail.com"
-                          field={field}
-                          label="Email"
-                        />
-                      )}
-                    />
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormRender
-                          placeholder="Enter password"
-                          field={field}
-                          label="Password"
-                          type="password"
-                        />
-                      )}
-                    />
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <div className="py-2 flex items-center justify-end w-full">
-                      <Link
-                        href="/auth/forgot-password"
-                        className="text-sm text-blue-500 hover:underline"
-                      >
-                        Forgot Password?
-                      </Link>
-                    </div>
-                    <CustomButton
-                      type="submit"
-                      className="w-full dark:bg-[--prodile-yellow] bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
-                      isLoading={isPending}
-                      disabled={isPending}
+          <CardContent>
+            <Form {...form}>
+              <motion.form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="grid gap-4"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <motion.div variants={itemVariants}>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormRender
+                        placeholder="example@gmail.com"
+                        field={field}
+                        label="Email"
+                        classNameLabel="dark:text-[#646464]"
+                      />
+                    )}
+                  />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormRender
+                        placeholder="Enter password"
+                        field={field}
+                        label="Password"
+                        type="password"
+                        classNameLabel="dark:text-[#646464]"
+                      />
+                    )}
+                  />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <div className="py-2 flex items-center justify-end w-full">
+                    <Link
+                      href="/auth/forgot-password"
+                      className="text-sm text-blue-500 hover:underline"
                     >
-                      Login
-                    </CustomButton>
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <div className="mt-4 text-center">
-                      <p className="text-base font-normal dark:text-black">
-                        Don&apos;t have an account?{" "}
-                        <Link
-                          href="/auth/signup"
-                          className="text-[--prodile-yellow] underline hover:opacity-40"
-                        >
-                          Sign up
-                        </Link>
-                      </p>
-                    </div>
-                  </motion.div>
-                </motion.form>
-              </Form>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  <CustomButton
+                    type="submit"
+                    className="w-full dark:bg-[--prodile-yellow] bg-[--prodile-yellow]  h-10 rounded-xl text-lg font-normal text-white py-4"
+                    isLoading={isPending}
+                    disabled={isPending}
+                  >
+                    Login
+                  </CustomButton>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <div className="mt-4 text-center">
+                    <p className="text-base font-normal dark:text-black">
+                      Don&apos;t have an account?{" "}
+                      <Link
+                        href="/auth/signup"
+                        className="text-[--prodile-yellow] underline hover:opacity-40"
+                      >
+                        Sign up
+                      </Link>
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.form>
+            </Form>
+          </CardContent>
+        </Card>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+        className="absolute top-1/4 left-1/4 w-32 h-32 bg-green-300 rounded-full filter blur-2xl opacity-20"
+        variants={floatingVariants}
+      ></motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          repeatType: "reverse",
+          delay: 0.5,
+        }}
+        className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-yellow-300 rounded-full filter blur-2xl opacity-20"
+        variants={floatingVariants}
+      ></motion.div>
     </div>
   );
 };
