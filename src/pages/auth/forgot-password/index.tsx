@@ -140,6 +140,7 @@ const ForgotPassword = () => {
                         placeholder="Enter email"
                         field={field}
                         label="Email Address"
+                        classNameLabel="dark:text-[#646464]"
                       />
                     )}
                   />
@@ -152,7 +153,7 @@ const ForgotPassword = () => {
                     >
                       Continue
                     </CustomButton>
-                    <Link href="/auth/login">Back to login</Link>
+                    <Link href="/auth/login" className='dark:text-black hover:underline'>Back to login</Link>
                   </div>
                 </motion.div>
               </motion.form>
@@ -160,7 +161,7 @@ const ForgotPassword = () => {
           </CardContent>
           <motion.div variants={itemVariants}>
             <div className="text-xs mt-4 justify-center flex gap-6 items-center">
-              <ul className="flex gap-6 items-center">
+              <ul className="flex gap-6 items-center dark:text-black">
                 <li>Terms and conditions</li>
                 <li className="bg-black h-[5px] w-[5px] rounded-full"></li>
                 <li>Privacy policy</li>
