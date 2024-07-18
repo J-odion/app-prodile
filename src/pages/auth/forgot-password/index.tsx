@@ -19,6 +19,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { AuthChangePassword } from "../../../../hooks/auth";
+import { ResetPasswordProps } from "../../../../hooks/auth/types";
+import { useMutation } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/lib/utils";
 
 const ForgotPassword = () => {
   const { toast } = useToast();
@@ -27,7 +31,7 @@ const ForgotPassword = () => {
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: "",
+      password: "",
     },
   });
 
@@ -35,14 +39,29 @@ const ForgotPassword = () => {
     router.push("/auth/login");
   };
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: [QUERY_KEYS.resetPassword],
+    mutationFn: (data: ResetPasswordProps) => AuthChangePassword(data),
+    onSuccess(res) {
+      console.log(res)
+      if (res) {
+        console.log("Reset response:", res.data);
+        router.push("/auth/login");
+      } else {
+        toast({
+          title: "Reset password failed",
+          description: "An error occurred while restting password",
+          className: "toast-error",
+        });
+      }
+    },
+  });
+
   const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
-    console.log(data);
-    toast({
-      title: "Reset password successful",
-      description: "You have successfully reset your password",
-      variant: "default",
-    });
-    router.push("/auth/forgot-password/success");
+    const payload = {
+      password: data.password,
+    };
+    mutate(payload);
   };
 
   const containerVariants = {
@@ -87,27 +106,6 @@ const ForgotPassword = () => {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-      {/* <div className="absolute md:block hidden md:w-1/2 top-0 left-8 h-full lg:w-1/2">
-        <Image
-          src="/images/agricFarm.svg"
-          alt="Agricultural Illustration Left"
-          layout="fill"
-          objectFit="contain"
-        />
-      </div>
-      <motion.div
-        variants={rotatingVariants}
-        animate="rotate"
-        className="absolute hidden lg:block top-0 right-8 h-full w-1/4"
-      >
-        <Image
-          src="/images/globe.svg"
-          alt="Agricultural Illustration Right"
-          layout="fill"
-          objectFit="contain"
-        />
-      </motion.div> */}
-
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -118,7 +116,7 @@ const ForgotPassword = () => {
           <CardHeader>
             <CardTitle className="text-2xl dark:text-black">Reset Password</CardTitle>
             <CardDescription>
-              Type in your registered email address to reset password
+              Type in your new password
             </CardDescription>
           </CardHeader>
 
@@ -134,12 +132,12 @@ const ForgotPassword = () => {
                 <motion.div variants={itemVariants}>
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="password"
                     render={({ field }) => (
                       <FormRender
-                        placeholder="Enter email"
+                        placeholder="Enter new password"
                         field={field}
-                        label="Email Address"
+                        label="New password"
                         classNameLabel="dark:text-[#646464]"
                       />
                     )}
@@ -150,6 +148,8 @@ const ForgotPassword = () => {
                     <CustomButton
                       type="submit"
                       className="w-full dark:bg-[--prodile-yellow] bg-[--prodile-yellow] h-10 rounded-xl text-lg font-normal text-white py-4"
+                      isLoading={isPending}
+                      disabled={isPending}
                     >
                       Continue
                     </CustomButton>

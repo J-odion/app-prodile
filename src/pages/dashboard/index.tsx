@@ -3,16 +3,9 @@ import { NextPageWithLayout } from "@/pages/_app";
 import DashboardSidebar from "@/components/layout/DashboardSidebar";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import MetricsCard from "@/components/Cards/MetricsCard";
-import NewSubscription from "@/components/NewSubscription";
-import ChatCard from "@/components/Cards/ChatCard";
-import OutcomeStatistics from "@/components/OutcomeStatistics";
-import { ArrowDown, Bell, ChevronDown } from "lucide-react";
-import NotificationModal from "@/components/layout/NotificationModal";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { OutcomeStatistics } from "@/components/OutcomeStatistics";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/ui/card";
 import ProductiveUnits from "./productive-units";
 import Agents from "./agents";
 import Resources from "./resources";
@@ -97,34 +90,6 @@ const Overview: NextPageWithLayout = () => {
           <TabsContent value="resources">
             <Resources />
           </TabsContent>
-
-          {/* <TabsContent value="notification" className="flex gap-4 justify-between flex-col md:flex-row">
-            <div className="md:w-1/2 w-full">
-             <NewSubscription />
-             </div>
-            <Card className=" bg-white p-4 rounded-lg shadow-md md:w-1/2 w-full">
-              <h2 className="text-xl font-semibold mb-4">Chats</h2>
-              {[
-                {
-                  name: "Victor Sunday",
-                  message: "Lorem ipsum dolor sit amet...",
-                  date: "Sep 27",
-                },
-                {
-                  name: "Anita Collins",
-                  message: "Lorem ipsum dolor sit amet...",
-                  date: "Sep 27",
-                },
-                {
-                  name: "Mary John",
-                  message: "Lorem ipsum dolor sit amet...",
-                  date: "Sep 27",
-                },
-              ].map((chat, idx) => (
-                <ChatCard key={idx} {...chat} />
-              ))}
-            </Card>
-          </TabsContent> */}
         </Tabs>
       </div>
     </>

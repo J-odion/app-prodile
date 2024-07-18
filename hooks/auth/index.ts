@@ -116,15 +116,27 @@ export const ResendOtp = async (payload: {
 export const AuthChangePassword = async (payload: {
 }) => {
   const config = {
-    method: "PUT",
-    url: `${process.env.NEXT_PUBLIC_API_URL}/changePassword`,
+    method: "POST",
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/auth/request-password-reset`,
     data: payload,
     headers: {
       "Content-Type": "application/json",
     },
   };
 
-  const { data } = await axios(config);
-
-  return data;
+  try {
+    const response = await axios(config);
+    console.log('Backend response:', response.data);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      console.log('Error response from backend:', error.response.data);
+      toast({
+        title: `Something went wrong!`,
+        description: error.response.data.msg || "Unable to reset password",
+        className: "toast-error",
+      })
+    }
+    throw error;
+  }
 }

@@ -15,3 +15,7 @@ export type SignUpProps = {
     email: string;
     otp: string;
   };
+
+  export type ResetPasswordProps = {
+    password: string;
+  };
