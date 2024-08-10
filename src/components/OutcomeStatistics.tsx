@@ -1,10 +1,13 @@
-import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+"use client"
+
+import { TrendingUp } from "lucide-react"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -13,87 +16,43 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle
 } from "@/components/ui/chart"
-
-export const description = "An interactive bar chart"
-
 const chartData = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  { date: "2024-04-02", desktop: 97, mobile: 180 },
-  { date: "2024-04-03", desktop: 167, mobile: 120 },
-  { date: "2024-04-04", desktop: 242, mobile: 260 },
-  { date: "2024-04-05", desktop: 373, mobile: 290 },
-  { date: "2024-04-06", desktop: 301, mobile: 340 },
-  { date: "2024-04-07", desktop: 245, mobile: 180 },
-  { date: "2024-04-08", desktop: 409, mobile: 320 },
-  { date: "2024-04-09", desktop: 59, mobile: 110 },
-  { date: "2024-04-10", desktop: 261, mobile: 190 },
-  { date: "2024-04-11", desktop: 327, mobile: 350 },
-  { date: "2024-04-12", desktop: 292, mobile: 210 },
+  { month: "January", revenue: 186, disbursement: 80 },
+  { month: "February", revenue: 305, disbursement: 200 },
+  { month: "March", revenue: 237, disbursement: 120 },
+  { month: "April", revenue: 73, disbursement: 190 },
+  { month: "May", revenue: 209, disbursement: 130 },
+  { month: "June", revenue: 214, disbursement: 140 },
 ]
 
 const chartConfig = {
-  views: {
-    label: "Page Views",
-  },
-  desktop: {
-    label: "Revenue",
+  revenue: {
+    label: "revenue",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Disbursement",
+  disbursement: {
+    label: "disbursement",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
 
+
+
 export function OutcomeStatistics() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("desktop")
-
-  const total = React.useMemo(
-    () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-    }),
-    []
-  )
-
   return (
     <Card>
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Outcome Statistics</CardTitle>
-          <CardDescription>
-            The statistics outcome of the page views
-          </CardDescription>
-        </div>
-        <div className="flex">
-          {["desktop", "mobile"].map((key) => {
-            const chart = key as keyof typeof chartConfig
-            return (
-              <button
-                key={chart}
-                data-active={activeChart === chart}
-                className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-                onClick={() => setActiveChart(chart)}
-              >
-                <span className="text-xs text-muted-foreground">
-                  {chartConfig[chart].label}
-                </span>
-                <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
-                </span>
-              </button>
-            )
-          })}
-        </div>
+      <CardHeader>
+        <CardTitle>Outcome Statistics - Revenue / Disbursement</CardTitle>
+        <CardDescription>January - June 2024</CardDescription>
+        
       </CardHeader>
-      <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <BarChart
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
@@ -103,38 +62,43 @@ export function OutcomeStatistics() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="date"
+              dataKey="month"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
-              }}
+              tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="views"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })
-                  }}
-                />
-              }
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartLegend content={<ChartLegendContent />} />
+            <Line
+              dataKey="revenue"
+              type="monotone"
+              stroke="var(--color-revenue)"
+              strokeWidth={2}
+              dot={false}
             />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
-          </BarChart>
+            <Line
+              dataKey="disbursement"
+              type="monotone"
+              stroke="var(--color-disbursement)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              Revenue is trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-2 leading-none text-muted-foreground">
+              Showing total transactions for the last 6 months
+            </div>
+          </div>
+        </div>
+      </CardFooter>
     </Card>
   )
 }
