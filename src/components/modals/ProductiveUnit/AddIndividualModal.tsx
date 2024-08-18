@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import {
   Select,
@@ -36,7 +36,7 @@ const AddIndividualModal = ({
   setIPUs,
   IPUs,
 }: ModalProps) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, control } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -81,20 +81,28 @@ const AddIndividualModal = ({
               className="space-y-8"
               autoComplete="off"
             >
-              <Select {...register("category")}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Beef Production">
-                    Beef Production
-                  </SelectItem>
-                  <SelectItem defaultValue={'Poultry Eggs'} value="Poultry Eggs">Poultry Eggs</SelectItem>
-                  <SelectItem value="stock animals">Stock Animals</SelectItem>
-                  <SelectItem value="machinaries">Machineries</SelectItem>
-                  <SelectItem value="feeds">Feeds</SelectItem>
-                </SelectContent>
-              </Select>
+              <Controller
+                name="category"
+                control={control}
+                render={({ field }) => (
+                  <Select {...field} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Beef Production">
+                        Beef Production
+                      </SelectItem>
+                      <SelectItem value="Poultry Eggs">Poultry Eggs</SelectItem>
+                      <SelectItem value="Stock Animals">
+                        Stock Animals
+                      </SelectItem>
+                      <SelectItem value="Machineries">Machineries</SelectItem>
+                      <SelectItem value="Feeds">Feeds</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
               <div className="mb-3 grid grid-cols-3 w-full items-center gap-1.5">
                 <Input
                   type="text"
@@ -104,25 +112,16 @@ const AddIndividualModal = ({
                   {...register("businessName")}
                   disabled={isLoading}
                 />
-                <Select {...register("entity")}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your Entity" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Corporation">
-                      Corporation
-                    </SelectItem>
-                    <SelectItem value="Limited">
-                      Limited Liability Company
-                    </SelectItem>
-                    <SelectItem value="Partnerships">
-                      Partnerships
-                    </SelectItem>
-                    <SelectItem value="Sole">
-                      Sole Proprietorship
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+
+                <Input
+                  type="text"
+                  className="py-5"
+                  id="entity"
+                  placeholder="Business entity type"
+                  {...register("entity")}
+                  disabled={isLoading}
+                />
+                
                 <Input
                   type="text"
                   className="py-5"
