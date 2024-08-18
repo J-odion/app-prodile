@@ -112,17 +112,6 @@ const Login = () => {
 
   return (
     <div className=" flex items-center justify-center min-h-screen bg-gradient-to-b from-green-400/5 to-yellow-400/15 overflow-hidden">
-
-    {/* <div>
-    <Image
-        src="/images/bg001.jpg"
-        alt="background"
-        width={400}
-        height={400}
-        quality={100}
-        className="h-full"
-      />
-    </div> */}
       <motion.div
         variants={containerVariants}
         initial="hidden"

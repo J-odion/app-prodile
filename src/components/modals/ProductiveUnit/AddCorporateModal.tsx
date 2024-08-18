@@ -20,42 +20,57 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { addCPU } from "../../../../hooks/Others/api";
+
 
 type ModalProps = {
   className?: string;
   title: string;
   open: boolean;
   setOpen: (open: boolean) => void;
+  setCPUs: React.Dispatch<React.SetStateAction<any[]>>; // Added props for updating CPUs
+  CPUs: any[];
 };
 
-const AddCoporateModal = ({
+const AddCorporateModal = ({
   title,
   open,
   setOpen,
   className,
+  setCPUs,
+  CPUs
 }: ModalProps) => {
   const { register, handleSubmit, reset } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const onSubmit = () => {
+  const onSubmit = async (data: any) => {
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      // Use the addCPU function to submit the form data
+      const response = await addCPU(data);
       setIsLoading(false);
       setOpen(false);
+      reset(); // Reset form after submission
       toast({
-        title: "Success",
-        description: "Productive unit added successfully",
+        title: response?.status.toString(),
+        description: response?.statusText,
         variant: "default",
       });
-    }, 2000);
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "Failed to add productive unit",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleCancel = () => {
     reset();
     setOpen(false);
-  }
-
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -72,13 +87,16 @@ const AddCoporateModal = ({
               className="space-y-8"
               autoComplete="off"
             >
-              <Select>
+              <Select {...register("category", { required: true })}>
                 <SelectTrigger className="">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="Beef Production">Beef Production</SelectItem>
+                  <SelectItem value="Poultry Eggs">Poultry Eggs</SelectItem>
+                  <SelectItem value="Stock Animals">Stock Animals</SelectItem>
+                  <SelectItem value="Machineries">Machineries</SelectItem>
+                  <SelectItem value="Feeds">Feeds</SelectItem>
                 </SelectContent>
               </Select>
               <div className="mb-3 grid grid-cols-2 w-full items-center gap-1.5">
@@ -90,7 +108,7 @@ const AddCoporateModal = ({
                   {...register("firstName", { required: true })}
                   disabled={isLoading}
                 />
-              <Input
+                <Input
                   type="text"
                   className="py-5 "
                   id="lastName"
@@ -103,20 +121,20 @@ const AddCoporateModal = ({
                 <Input
                   type="text"
                   className="py-5 "
-                  id="emailId"
+                  id="email"
                   placeholder="Email ID"
-                  {...register("emailId", { required: true })}
+                  {...register("email", { required: true })}
                   disabled={isLoading}
                 />
-                <Input
+                {/* <Input
                   type="text"
                   className="py-5 "
                   id="phone"
                   placeholder="Mobile Number"
                   {...register("phone", { required: true })}
                   disabled={isLoading}
-                />
-              <Input
+                /> */}
+                <Input
                   type="text"
                   className="py-5 "
                   id="bvn"
@@ -129,20 +147,20 @@ const AddCoporateModal = ({
                 <Input
                   type="text"
                   className="py-5 "
-                  id="nin"
+                  id="NIN"
                   placeholder="NIN"
-                  {...register("nin", { required: true })}
+                  {...register("NIN", { required: true })}
                   disabled={isLoading}
                 />
                 <Input
                   type="text"
                   className="py-5 "
-                  id="companyName"
+                  id="businessName"
                   placeholder="Company Name"
-                  {...register("companyName", { required: true })}
+                  {...register("businessName", { required: true })}
                   disabled={isLoading}
                 />
-              <Input
+                <Input
                   type="text"
                   className="py-5 "
                   id="companyAddress"
@@ -158,35 +176,17 @@ const AddCoporateModal = ({
                 <Input
                   type="text"
                   className="py-5 "
-                  id="fullName"
-                  placeholder="full Name"
-                  {...register("fullName", { required: true })}
+                  id="nexofkinFullName"
+                  placeholder="Full Name"
+                  {...register("nexofkinFullName", { required: true })}
                   disabled={isLoading}
                 />
                 <Input
                   type="text"
                   className="py-5 "
-                  id="phone"
-                  placeholder="Phone number"
-                  {...register("phone", { required: true })}
-                  disabled={isLoading}
-                />
-              </div>
-              <div className="mb-3 grid grid-cols-2 w-full items-center gap-1.5">
-                <Input
-                  type="text"
-                  className="py-5 "
-                  id="emailKin"
-                  placeholder="Email Address"
-                  {...register("emailKin", { required: true })}
-                  disabled={isLoading}
-                />
-                <Input
-                  type="text"
-                  className="py-5 "
-                  id="homeAddress"
-                  placeholder="Home Address"
-                  {...register("homeAddress", { required: true })}
+                  id="nexofkinPhoneNumber"
+                  placeholder="Next of kin Phone Number"
+                  {...register("nexofkinPhoneNumber", { required: true })}
                   disabled={isLoading}
                 />
               </div>
@@ -194,30 +194,35 @@ const AddCoporateModal = ({
                 <Input
                   type="text"
                   className="py-5 "
-                  id="relationship"
-                  placeholder="Relationship"
-                  {...register("relationship", { required: true })}
+                  id="nexofkinEmail"
+                  placeholder="next of kin Email"
+                  {...register("nexofkinEmail", { required: true })}
                   disabled={isLoading}
                 />
                 <Input
                   type="text"
                   className="py-5 "
-                  id="occupation"
+                  id="nexofkinOccupation"
                   placeholder="Occupation"
-                  {...register("occupation", { required: true })}
+                  {...register("nexofkinOccupation", { required: true })}
+                  disabled={isLoading}
+                />
+                <Input
+                  type="text"
+                  className="py-5 "
+                  id="nexofkinAddress"
+                  placeholder="Address"
+                  {...register("nexofkinAddress", { required: true })}
                   disabled={isLoading}
                 />
               </div>
-              <div className="flex justify-end gap-6">
-              <CustomButton
-                type="submit"
-                className="bg-[--prodile-yellow] hover:bg-[--prodile-yellow]/50 focus-visible:outline-none text-[13px] font-semibold"
-                disabled={isLoading}
-                isLoading={isLoading}
-              >
-                Submit
-              </CustomButton>
-              <Button variant={'outline'} className="text-[--prodile-yellow] text-[13px] font-semibold" onClick={handleCancel}>Cancel</Button>
+              <div className="mt-6 flex justify-end gap-4">
+                <Button type="button" variant="outline" onClick={handleCancel} disabled={isLoading}>
+                  Cancel
+                </Button>
+                <Button type="submit" >
+                  Add Productive Unit
+                </Button>
               </div>
             </form>
           </div>
@@ -227,4 +232,4 @@ const AddCoporateModal = ({
   );
 };
 
-export default AddCoporateModal;
+export default AddCorporateModal;

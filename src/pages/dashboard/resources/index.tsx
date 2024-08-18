@@ -18,6 +18,9 @@ import Machinery from "@/components/Cards/Machinery";
 import Feed from "@/components/Cards/Feed";
 
 const Resources: NextPageWithLayout = () => {
+
+
+  
   return (
     <>
       <div className="w-full p-6">
