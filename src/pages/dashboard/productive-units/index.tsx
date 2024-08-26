@@ -145,50 +145,6 @@ const ProductiveUnits: NextPageWithLayout = () => {
     indexOfLastItem
   );
 
-  // const handleAddIPU = async (ipuData: any) => {
-  //   try {
-  //     const newIPU = await addIPU(ipuData);
-  //     setIPUs([...IPUs, newIPU?.data]);
-  //     setShowModal(false);
-  //   } catch (error) {
-  //     console.error("Error adding productive unit:", error);
-  //   }
-  // };
-  // const handleAddCPU = async (cpuData: any) => {
-  //   try {
-  //     const newCPU= await addCPU(cpuData);
-  //     setCPUs([...CPUs, newCPU?.data]);
-  //     setShowModal(false);
-  //   } catch (error) {
-  //     console.error("Error adding productive unit:", error);
-  //   }
-  // };
-
-  // const handleUpdateIPU = async (id: string, updatedData: any) => {
-  //   try {
-  //     const updatedUnit = await editIPU(id, updatedData);
-  //     setIPUs(
-  //       IPUs.map((unit) =>
-  //         unit._id === id ? updatedUnit : unit
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error updating productive unit:", error);
-  //   }
-  // };
-
-  // const handleUpdateCPU = async (id: string, updatedData: any) => {
-  //   try {
-  //     const updatedUnit = await editCPU(id, updatedData);
-  //     setCPUs(
-  //       CPUs.map((unit) =>
-  //         unit._id === id ? updatedUnit : unit
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error updating productive unit:", error);
-  //   }
-  // };
 
   const handleDeleteIPU = async (id: string) => {
     try {

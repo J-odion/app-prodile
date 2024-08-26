@@ -85,21 +85,7 @@ const DashboardNav = ({ page, toggleSideBar, setToggleSideBar }: Props) => {
                   </div>
                 </li>
               </Link>
-              <Link href="/dashboard/settings">
-                <li
-                  className={`my-1 py-3 pl-10 ${
-                    route === '/dashboard/settings'
-                      ? 'bg-[--prodile-yellow] text-white'
-                      : 'hover:bg-[--prodile-yellow] text-black hover:text-[#1C1C1C]'
-                  } rounded-xl font-semibold text-sm`}
-                  onClick={() => setToggleSideBar(false)}
-                >
-                  <div className="flex items-center">
-                    <Settings size={20} className="mr-3" />
-                    Settings
-                  </div>
-                </li>
-              </Link>
+              
             </ul>
             <div
               className="flex items-center justify-center p-4 text-[#959190] cursor-pointer"

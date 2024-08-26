@@ -18,18 +18,19 @@ export type IPUProps = {
 
 export type CPUProps = {
   category: string;
-  FirstName: string;
-  LastName: string;
+  firstName: string;
+  lastName: string;
   businessName: string;
   NIN: string;
   bvn: string;
   email: string;
   address: string;
-  nexofkinFullName: string;
-  nexofkinPhoneNumber: string;
-  nexofkinEmail: string;
-  nexofkinAddress: string;
-  nexofkinOccupation: string;
+  nextofkinFullName: string;
+  nextofkinPhoneNumber: string;
+  nextofkinEmail: string;
+  nextofkinAddress: string;
+  nextofkinOccupation: string;
+  nextofkinRelationship: string;
 };
 
 export type ResourceProps = {

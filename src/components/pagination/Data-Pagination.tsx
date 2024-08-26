@@ -23,7 +23,7 @@ const Datapagination = ({
   };
 
   return (
-    <Pagination className='fixed bottom-4 left-0 right-0'>
+    <Pagination className=' bottom-4 left-0 right-0'>
       <PaginationPrevious onClick={() => handleClick(currentPage - 1)} className='cursor-pointer' />
       <PaginationContent>
         {Array.from({ length: totalPages }).map((_, index) => (

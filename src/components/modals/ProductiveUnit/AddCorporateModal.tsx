@@ -7,15 +7,12 @@ import {
   DialogContent,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm, Controller } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -39,42 +36,35 @@ const AddCorporateModal = ({
   setCPUs,
   CPUs
 }: ModalProps) => {
-  const { register, handleSubmit, reset, control } = useForm({
-    defaultValues: {
-      category: "Beef Production",
-      FirstName: "",LastName: "",businessName: "", NIN: '', bvn: '', email: '',
-      address: '', nexofkinFullName:"", nexofkinPhoneNumber: '',  nexofkinEmail: '',
-      nexofkinAddress: '', nexofkinOccupation: ''
-    },
-  });
+  const { register, handleSubmit, reset, control } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const onSubmit = async (data: any) => {
-    setIsLoading(true);
-    try {
-      const response = await addCPU(data);
-      setIsLoading(false);
-      setOpen(false);
-      reset();
-      toast({
-        title: response?.status.toString(),
-        description: response?.statusText,
-        variant: "default",
-      });
-    } catch (error) {
-      setIsLoading(false);
-      toast({
-        title: "Error",
-        description: "Failed to add productive unit",
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleCancel = () => {
     reset();
     setOpen(false);
+  };
+
+  const handleAddCPU = async (unitData: any) => {
+    try {
+      setIsLoading(true);
+      const newUnit = await addCPU(unitData);
+      setCPUs([...CPUs, newUnit?.data]);
+      setOpen(false);
+      toast({
+        title: "Success",
+        description: "Productive Unit added successfully.",
+      });
+    } catch (error) {
+      console.error("Error adding productive unit:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add Productive Unit.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -88,7 +78,7 @@ const AddCorporateModal = ({
           </DialogTitle>
           <div>
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(handleAddCPU)}
               className="space-y-8"
               autoComplete="off"
             >
@@ -101,11 +91,15 @@ const AddCorporateModal = ({
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Beef Production">Beef Production</SelectItem>
+                      <SelectItem value="Beef Production">
+                        Beef Production
+                      </SelectItem>
                       <SelectItem value="Poultry Eggs">Poultry Eggs</SelectItem>
-                      <SelectItem value="Stock Animals">Stock Animals</SelectItem>
-                      <SelectItem value="Machineries">Machineries</SelectItem>
-                      <SelectItem value="Feeds">Feeds</SelectItem>
+                      <SelectItem value="stock animals">
+                      stock animals
+                      </SelectItem>
+                      <SelectItem value="machinaries">Machineries</SelectItem>
+                      <SelectItem value="feeds">Feeds</SelectItem>
                     </SelectContent>
                   </Select>
                 )}
@@ -117,15 +111,15 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="firstName"
                   placeholder="First Name"
-                  {...register("FirstName", { required: true })}
+                  {...register("firstName")}
                   disabled={isLoading}
                 />
                 <Input
                   type="text"
                   className="py-5 "
                   id="lastName"
-                  placeholder="Last Name"
-                  {...register("LastName", { required: true })}
+                  placeholder="lastName"
+                  {...register("lastName")}
                   disabled={isLoading}
                 />
               </div>
@@ -136,7 +130,7 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="email"
                   placeholder="Email ID"
-                  {...register("email", { required: true })}
+                  {...register("email")}
                   disabled={isLoading}
                 />
                 <Input
@@ -144,7 +138,7 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="bvn"
                   placeholder="BVN"
-                  {...register("bvn", { required: true })}
+                  {...register("bvn")}
                   disabled={isLoading}
                 />
               </div>
@@ -155,7 +149,7 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="NIN"
                   placeholder="NIN"
-                  {...register("NIN", { required: true })}
+                  {...register("NIN")}
                   disabled={isLoading}
                 />
                 <Input
@@ -163,7 +157,7 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="businessName"
                   placeholder="Company Name"
-                  {...register("businessName", { required: true })}
+                  {...register("businessName")}
                   disabled={isLoading}
                 />
                 <Input
@@ -171,7 +165,7 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="companyAddress"
                   placeholder="Company Address"
-                  {...register("address", { required: true })}
+                  {...register("address")}
                   disabled={isLoading}
                 />
               </div>
@@ -186,15 +180,15 @@ const AddCorporateModal = ({
                   className="py-5 "
                   id="nexofkinFullName"
                   placeholder="Full Name"
-                  {...register("nexofkinFullName", { required: true })}
+                  {...register("nextofkinFullName")}
                   disabled={isLoading}
                 />
                 <Input
                   type="text"
                   className="py-5 "
-                  id="nexofkinPhoneNumber"
+                  id="nextofkinPhoneNumber"
                   placeholder="Next of kin Phone Number"
-                  {...register("nexofkinPhoneNumber", { required: true })}
+                  {...register("nextofkinPhoneNumber")}
                   disabled={isLoading}
                 />
               </div>
@@ -203,36 +197,54 @@ const AddCorporateModal = ({
                 <Input
                   type="text"
                   className="py-5 "
-                  id="nexofkinEmail"
+                  id="nextofkinEmail"
                   placeholder="next of kin Email"
-                  {...register("nexofkinEmail", { required: true })}
+                  {...register("nextofkinEmail")}
                   disabled={isLoading}
                 />
                 <Input
                   type="text"
                   className="py-5 "
-                  id="nexofkinOccupation"
+                  id="nextofkinOccupation"
                   placeholder="Occupation"
-                  {...register("nexofkinOccupation", { required: true })}
+                  {...register("nextofkinOccupation")}
                   disabled={isLoading}
                 />
-                <Input
+                
+              </div>
+
+              <div className="mb-3 grid grid-cols-2 w-full items-center gap-1.5">
+              <Input
                   type="text"
                   className="py-5 "
                   id="nexofkinAddress"
                   placeholder="Address"
-                  {...register("nexofkinAddress", { required: true })}
+                  {...register("nextofkinAddress")}
                   disabled={isLoading}
                 />
+                <Input
+                  type="text"
+                  className="py-5 "
+                  id="nextofkinOccupation"
+                  placeholder="Relationship"
+                  {...register("nextofkinRelationship")}
+                  disabled={isLoading}
+                />
+                
               </div>
 
               <div className="mt-6 flex justify-end gap-4">
                 <Button type="button" variant="outline" onClick={handleCancel} disabled={isLoading}>
                   Cancel
                 </Button>
-                <Button type="submit" disabled={isLoading}>
-                  Add Productive Unit
-                </Button>
+                <CustomButton
+                  type="submit"
+                  className="bg-[--prodile-yellow] hover:bg-[--prodile-yellow]/50 focus-visible:outline-none text-[13px] font-semibold"
+                  disabled={isLoading}
+                  isLoading={isLoading}
+                >
+                  Submit
+                </CustomButton>
               </div>
             </form>
           </div>

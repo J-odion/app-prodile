@@ -86,7 +86,7 @@ const DashboardSidebar = ({ children }: DashboardSidebarProps) => {
                   </li>
                 </Link>
 
-                <Link href="/dashboard/settings">
+                {/* <Link href="/dashboard/settings">
                   <li
                     className={
                       route === "/dashboard/settings"
@@ -96,7 +96,7 @@ const DashboardSidebar = ({ children }: DashboardSidebarProps) => {
                   >
                     <div className="flex items-center">Settings</div>
                   </li>
-                </Link>
+                </Link> */}
               </ul>
               {/* </nav> */}
               <div

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextPageWithLayout } from "@/pages/_app";
 import DashboardSidebar from "@/components/layout/DashboardSidebar";
 import DashboardLayout from "@/components/layout/DashboardLayout";
@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NotificationModal from "@/components/layout/NotificationModal";
-import { ChevronDown, Eye, Pen, Trash } from "lucide-react";
+import { ChevronDown, Eye, Pen, Plus, Trash } from "lucide-react";
 import { notifications } from "..";
 import {
     Table,
@@ -21,21 +21,70 @@ import {
   import { agents } from "@/data/data";
 import MetricsCard from "@/components/Cards/MetricsCard";
 import Datapagination from "@/components/pagination/Data-Pagination";
+import { Button } from "@/components/ui/button";
+import AddAgentModal from "@/components/modals/AddAgent";
+import { getAgent } from "../../../../hooks/Others/api";
 
 const itemsPerPage = 5;
 
 const Agents: NextPageWithLayout = () => {
+  interface AddAgent{
+    _id: string,
+    industry: String,
+    name:  String, 
+    location:  String, 
+    entity: String,    
+  }
 
+  interface ModalProps {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    title: string;
+    setAgents: React.Dispatch<React.SetStateAction<any[]>>;
+    onSubmit: (AgentData: any) => Promise<void>; // Ensure this is defined
+  }
+  
+  const [showModal, setShowModal] = useState(false);
+  const [agents, setAgents] = useState<AddAgent[]>([])
     const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = agents.slice(indexOfFirstItem, indexOfLastItem);
 
+  // Fetch IPUs and CPUs data
+  useEffect(() => {
+    const loadAgent = async () => {
+      try {
+        const agentData = await getAgent();
+        setAgents(agentData?.data);
+      } catch (error) {
+        console.error("Error fetching IPU:", error);
+      }
+    };
+    loadAgent();
+  }, []);
+
+  // Handlers for modals
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <>
       <div className="w-full p-6">
-
+      <div className="flex justify-end py-3">
+            <Button
+            onClick={handleShowModal}
+              variant={"link"}
+              className="flex items-center gap-3 text-sm font-semibold"
+            >
+              Add Agent
+              <span className="border-2 border-dotted border-[--prodile-yellow] rounded-full h-6 w-6 flex items-center justify-center">
+                <Plus size={18} className="text-[--prodile-yellow]" />
+              </span>
+            </Button>
+          </div>
         <div>
           <div className="grid grid-cols-4 gap-6 mb-8">
           <MetricsCard
@@ -82,12 +131,12 @@ const Agents: NextPageWithLayout = () => {
                 </TableHeader>
                 <TableBody className="text-[13px]">
                   {currentItems.map((item) => (
-                    <TableRow key={item.id}>
+                    <TableRow key={item._id}>
                       <TableCell className="font-semibold">
                         {item.name}
                       </TableCell>
                       <TableCell className="">
-                        {item.category}
+                        {item.entity}
                       </TableCell>
                       <TableCell>{item.industry}</TableCell>
                       <TableCell>{item.location}</TableCell>
@@ -112,6 +161,14 @@ const Agents: NextPageWithLayout = () => {
         currentPage={currentPage}
         onPageChange={setCurrentPage}
       />
+
+      <AddAgentModal 
+        title="Add Agent"
+        setOpen={ setShowModal}
+        setAgents={setAgents}
+        agents ={agents}
+        open = {showModal}
+       />
     </>
   );
 };
