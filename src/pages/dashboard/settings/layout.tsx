@@ -8,30 +8,30 @@ const sidebarNavItems = [
     title: "Bio-Data",
     href: "/dashboard/settings",
   },
-  {
-    title: "Productivity",
-    href: "/dashboard/settings/productivity",
-  },
-  {
-    title: "Legal",
-    href: "/dashboard/settings/legal",
-  },
-  {
-    title: "Environment",
-    href: "/dashboard/settings/environment",
-  },
-  {
-    title: "Financial",
-    href: "/dashboard/settings/financial",
-  },
-  {
-    title: "Resources",
-    href: "/dashboard/settings/resources",
-  },
-  {
-    title: "Notes",
-    href: "/dashboard/settings/notes",
-  },
+  // {
+  //   title: "Productivity",
+  //   href: "/dashboard/settings/productivity",
+  // },
+  // {
+  //   title: "Legal",
+  //   href: "/dashboard/settings/legal",
+  // },
+  // {
+  //   title: "Environment",
+  //   href: "/dashboard/settings/environment",
+  // },
+  // {
+  //   title: "Financial",
+  //   href: "/dashboard/settings/financial",
+  // },
+  // {
+  //   title: "Resources",
+  //   href: "/dashboard/settings/resources",
+  // },
+  // {
+  //   title: "Notes",
+  //   href: "/dashboard/settings/notes",
+  // },
   {
     title: "Appearance",
     href: "/dashboard/settings/appearance"

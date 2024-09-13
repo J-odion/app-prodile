@@ -32,7 +32,7 @@ const Overview: NextPageWithLayout = () => {
   return (
     <>
       <DashboardSidebar />
-      <div className="w-full px-6 pt-10 lg:pt-28">
+      <div className="w-[90%] mx-auto px-6 pt-10 lg:pt-28">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-semibold text-[#404040]">Dashboard</h1>
@@ -51,34 +51,37 @@ const Overview: NextPageWithLayout = () => {
             {/* <TabsTrigger value="notification">Notification</TabsTrigger> */}
           </TabsList>
           <TabsContent value="overview">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-              <MetricsCard
-                title="Revenue"
-                value="₦984.28"
-                change="+11.82"
-                changeType="increase"
-              />
-              <MetricsCard
-                title="Subscription"
-                value="169"
-                change="-18.28"
-                changeType="decrease"
-              />
-              <MetricsCard
-                title="Agent"
-                value="406"
-                change="+33.3"
-                changeType="increase"
-              />
-              <MetricsCard
-                title="Disbursement"
-                value="102"
-                change="-18.27"
-                changeType="decrease"
-              />
-            </div>
-            <div className="w-full">
-              <OutcomeStatistics />
+            <div className="flex flex-col ">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+                <MetricsCard
+                  title="Revenue"
+                  value="₦984.28"
+                  change="+11.82"
+                  changeType="increase"
+                />
+                <MetricsCard
+                  title="Subscription"
+                  value="169"
+                  change="-18.28"
+                  changeType="decrease"
+                />
+                <MetricsCard
+                  title="Agent"
+                  value="406"
+                  change="+33.3"
+                  changeType="increase"
+                />
+                <MetricsCard
+                  title="Disbursement"
+                  value="102"
+                  change="-18.27"
+                  changeType="decrease"
+                />
+              </div>
+              <div className=" flex w-full mx-auto justify-between">
+                <OutcomeStatistics />
+                <OutcomeStatistics />
+              </div>
             </div>
           </TabsContent>
           <TabsContent value="productive-units">
